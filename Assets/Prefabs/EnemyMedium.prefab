@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 5034192296882982595}
   m_Layer: 0
   m_Name: Model
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -332,7 +332,7 @@ PrefabInstance:
         type: 3}
       propertyPath: _projectilePrefab
       value: 
-      objectReference: {fileID: 5926501848048603687, guid: 8889d4c1127465e4e9859539d680250d,
+      objectReference: {fileID: 231295506229867725, guid: 8889d4c1127465e4e9859539d680250d,
         type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fd9d85aee8de36543bc3eaf36dedd988, type: 3}
