@@ -59,7 +59,7 @@ GameObject:
   - component: {fileID: 2514723292562920885}
   - component: {fileID: 4347329408343804023}
   - component: {fileID: 4073298169777045023}
-  - component: {fileID: 2155174045187774643}
+  - component: {fileID: 3448143537292886454}
   m_Layer: 0
   m_Name: Model
   m_TagString: Enemy
@@ -159,7 +159,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 116
   m_CollisionDetection: 0
---- !u!114 &2155174045187774643
+--- !u!114 &3448143537292886454
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -168,9 +168,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 5017763708596788048}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f57dbf80cd95e804394b99af2e05456c, type: 3}
+  m_Script: {fileID: 11500000, guid: 0ad062d852b4d8b4484c96e4e49fde72, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _isSwarm: 1
   _health: 1
   _flashMaterial: {fileID: 2100000, guid: a7de074640bd0454faf6f2e812f11782, type: 2}
+  _minSwarmSize: 3
+  _maxSwarmSize: 7
+  _spawnInterval: 0.15

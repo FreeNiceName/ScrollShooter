@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class BackgroundController : MonoBehaviour
@@ -8,7 +6,6 @@ public class BackgroundController : MonoBehaviour
     private Vector3 _startPos;
     private float _repeatLength;
 
-    // Start is called before the first frame update
     void Start()
     {
         _startPos = transform.position;
@@ -17,7 +14,6 @@ public class BackgroundController : MonoBehaviour
         transform.Translate(Vector3.back * startOffset);
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (transform.position.z < _startPos.z - _repeatLength)

@@ -1,5 +1,3 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -19,7 +17,6 @@ public class SettingsMenu : MonoBehaviour
     private GameObject _prevMenu;
     private static Resolution[] _resolutions;
 
-    // Start is called before the first frame update
     void Start()
     {
         ButtonsInit();

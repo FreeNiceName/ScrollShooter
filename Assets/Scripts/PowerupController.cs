@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PowerupController : MonoBehaviour
@@ -19,7 +17,6 @@ public class PowerupController : MonoBehaviour
     private Vector3 _circle1Vector;
     private Vector3 _circle2Vector;
 
-    // Start is called before the first frame update
     void Start()
     {
         _circle1 = transform.GetChild(0);
@@ -28,7 +25,6 @@ public class PowerupController : MonoBehaviour
         _circle2Vector = NextVector3();
     }
 
-    // Update is called once per frame
     void Update()
     {
         MoveDown();

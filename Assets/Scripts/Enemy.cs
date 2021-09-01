@@ -3,7 +3,6 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
-    [SerializeField] private bool _isSwarm;
     [SerializeField] private int _health;
     [SerializeField] private Material _flashMaterial;
 
@@ -11,19 +10,10 @@ public class Enemy : MonoBehaviour
     private Material _originalMaterial;
     private float _flashDuration = 0.1f;
 
-    public bool IsSwarm { get => _isSwarm; }
-
-    // Start is called before the first frame update
     void Start()
     {
         _renderer = GetComponent<MeshRenderer>();
         _originalMaterial = _renderer.material;
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
     }
 
     private void OnTriggerEnter(Collider other)

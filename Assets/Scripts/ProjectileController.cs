@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class ProjectileController : MonoBehaviour
 {
@@ -11,17 +9,12 @@ public class ProjectileController : MonoBehaviour
     private void Start()
     {
         if (gameObject.name.Contains("Player"))
-        {
             _direction = 1;
-        }
         else if (gameObject.name.Contains("Enemy"))
-        {
             _direction = -1;
-        }
 
     }
 
-    // Update is called once per frame
     void Update()
     {
         transform.Translate(Vector3.forward * _speed * _direction * Time.deltaTime);

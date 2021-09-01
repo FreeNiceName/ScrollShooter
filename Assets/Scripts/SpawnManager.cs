@@ -14,11 +14,6 @@ public class SpawnManager : MonoBehaviour
     private float _powerupSpawnInterval = 50;
     private float _spawnDelay = 3;
 
-    private float _swarmSpawnInterval = 0.15f;
-    private int _minSwarmSize = 3;
-    private int _maxSwarmSize = 7;
-
-    // Start is called before the first frame update
     void Start()
     {
         InvokeRepeating("SpawnEnemy", _spawnDelay, _enemySpawnInterval);
@@ -31,10 +26,21 @@ public class SpawnManager : MonoBehaviour
         var enemy = _enemyPrefabs[enemyIndex];
         var enemyScript = enemy.GetComponentInChildren<Enemy>();
 
-        if (enemyScript.IsSwarm)
-            StartCoroutine(SpawnSwarmEnemies(enemy));
-        else
-            Instantiate(enemy, NextSpawnPosition(), enemy.transform.rotation);
+        switch (enemyScript)
+        {
+            case SwarmEnemy swarm:
+                {
+                    var swarmSize = Random.Range(swarm.MinSwarmSize, swarm.MaxSwarmSize + 1);
+                    StartCoroutine(SpawnSwarmEnemies(enemy, swarmSize, swarm.SpawnInterval));
+                    break;
+                }
+            default:
+                {
+                    Instantiate(enemy, NextSpawnPosition(), enemy.transform.rotation);
+                    break;
+                }
+
+        }
     }
 
     private void SpawnPowerup()
@@ -49,14 +55,13 @@ public class SpawnManager : MonoBehaviour
         return spawnPos;
     }
 
-    private IEnumerator SpawnSwarmEnemies(GameObject enemy)
+    private IEnumerator SpawnSwarmEnemies(GameObject enemy, int swarmSize, float spawnInterval)
     {
-        var swarmSize = Random.Range(_minSwarmSize, _maxSwarmSize + 1);
         var spawnPos = NextSpawnPosition();
         for (var i = 0; i < swarmSize; ++i)
         {
             Instantiate(enemy, spawnPos, enemy.transform.rotation);
-            yield return new WaitForSeconds(_swarmSpawnInterval);
+            yield return new WaitForSeconds(spawnInterval);
         }
     }
 }

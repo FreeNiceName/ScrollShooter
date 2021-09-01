@@ -11,20 +11,17 @@ public class PlayerController : MonoBehaviour
 
     private Transform _spaceship;
 
-    // Start is called before the first frame update
     void Start()
     {
         _spaceship = transform.GetChild(0);
     }
 
-    // Update is called once per frame
     void FixedUpdate()
     {
         MovePlayer();
         ConstraintPlayerPosition();
     }
 
-    //Moves the player on input
     private void MovePlayer()
     {
         var verticalInput = Input.GetAxis("Vertical");
