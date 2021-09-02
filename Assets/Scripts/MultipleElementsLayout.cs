@@ -1,0 +1,82 @@
+using UnityEngine;
+using UnityEngine.UI;
+
+public class MultipleElementsLayout : MonoBehaviour
+{
+    [SerializeField] private GameObject _layoutElementPrefab;
+    [SerializeField] private GameObject _multiplierPrefab;
+
+    private int _maxElements;
+    private GameObject[] _elements;
+    private GameObject _multiplier;
+    private Text _multiplierText;
+    private bool _isReversed;
+
+    void Start()
+    {
+        _isReversed = GetComponent<HorizontalLayoutGroup>().reverseArrangement;
+
+        _multiplier = Instantiate(_multiplierPrefab);
+        _multiplier.transform.SetParent(transform, false);
+        _multiplierText = _multiplier.GetComponent<Text>();
+
+        _maxElements = CalculateMaxElements();
+        _elements = new GameObject[_maxElements];
+
+        for(var i = 0; i < _maxElements; ++i)
+        {
+            var element = Instantiate(_layoutElementPrefab);
+            element.transform.SetParent(transform, false);
+            _elements[i] = element;
+        }
+
+        CreateEmptySpace().transform.SetParent(transform, false);
+    }
+
+    private int CalculateMaxElements()
+    {
+        var width = GetComponent<RectTransform>().rect.width;
+        var layout = GetComponent<HorizontalLayoutGroup>();
+        var layoutElement = _layoutElementPrefab.GetComponent<LayoutElement>();
+        var freeWidth = width - layout.padding.left - layout.padding.right;
+        var elementWidth = layoutElement.minWidth + layout.spacing;
+        return (int)(freeWidth / elementWidth);
+    }
+
+    private GameObject CreateEmptySpace()
+    {
+        var emptySpace = new GameObject("EmptySpace", typeof(RectTransform));
+        emptySpace.GetComponent<RectTransform>().sizeDelta = new Vector2(1, 1);
+        var layoutElement = emptySpace.AddComponent<LayoutElement>();
+        layoutElement.preferredWidth = GetComponent<RectTransform>().rect.width;
+        layoutElement.layoutPriority++;
+        return emptySpace;
+    }
+
+    public void UpdateValue(int newValue)
+    {
+        if (newValue > _maxElements)
+        {
+            _elements[0].SetActive(true);
+            for (var i = 1; i < _maxElements; ++i)
+                _elements[i].SetActive(false);
+
+            _multiplier.SetActive(true);
+            if (_isReversed)
+                _multiplierText.text = $"x {newValue}";
+            else
+                _multiplierText.text = $"{newValue} x";
+        }
+        else
+        {
+            _multiplier.SetActive(false);
+            for (var i = 0; i < _maxElements; ++i)
+            {
+                if (i < newValue)
+                    _elements[i].SetActive(true);
+                else
+                    _elements[i].SetActive(false);
+            }
+        }
+    }
+}

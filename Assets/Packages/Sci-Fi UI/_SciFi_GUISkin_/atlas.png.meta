@@ -112,7 +112,7 @@ TextureImporter:
     second: arrow_down
   - first:
       213: -217455086581007235
-    second: atlas_2
+    second: rocket_ico
   - first:
       213: 4335250483284255847
     second: arrow_up1
@@ -959,6 +959,27 @@ TextureImporter:
       bones: []
       spriteID: 99b33f78a302b52f0800000000000000
       internalID: -983156657889264743
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: rocket_ico
+      rect:
+        serializedVersion: 2
+        x: 2822
+        y: 2597
+        width: 153
+        height: 338
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d7cbcb930c17bfcf0800000000000000
+      internalID: -217455086581007235
       vertices: []
       indices: 
       edges: []
