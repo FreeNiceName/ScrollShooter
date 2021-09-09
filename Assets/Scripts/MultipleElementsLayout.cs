@@ -5,6 +5,7 @@ public class MultipleElementsLayout : MonoBehaviour
 {
     [SerializeField] private GameObject _layoutElementPrefab;
     [SerializeField] private GameObject _multiplierPrefab;
+    [SerializeField] private int _initialValue;
 
     private int _maxElements;
     private GameObject[] _elements;
@@ -31,6 +32,7 @@ public class MultipleElementsLayout : MonoBehaviour
         }
 
         CreateEmptySpace().transform.SetParent(transform, false);
+        UpdateValue(_initialValue);
     }
 
     private int CalculateMaxElements()

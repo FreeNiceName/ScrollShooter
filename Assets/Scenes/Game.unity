@@ -291,8 +291,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -200, y: 60}
-  m_SizeDelta: {x: 400, y: 120}
+  m_AnchoredPosition: {x: -150, y: 60}
+  m_SizeDelta: {x: 300, y: 120}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &130519855
 MonoBehaviour:
@@ -707,8 +707,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 150, y: 35}
-  m_SizeDelta: {x: 300, y: 70}
+  m_AnchoredPosition: {x: 80, y: 35}
+  m_SizeDelta: {x: 160, y: 70}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &251008177
 MonoBehaviour:
@@ -790,6 +790,7 @@ MonoBehaviour:
     type: 3}
   _multiplierPrefab: {fileID: 7163321498401782731, guid: 449822586f3b6954a9602cef5898ec66,
     type: 3}
+  _initialValue: 5
 --- !u!1 &309044482
 GameObject:
   m_ObjectHideFlags: 0
@@ -1366,8 +1367,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 195, y: -90}
-  m_SizeDelta: {x: 390, y: 60}
+  m_AnchoredPosition: {x: 145.00003, y: -90}
+  m_SizeDelta: {x: 290, y: 60}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &772027038
 MonoBehaviour:
@@ -1873,8 +1874,8 @@ MonoBehaviour:
   _healthSlider: {fileID: 2088090487}
   _livesLayout: {fileID: 2134546373}
   _specialsLayout: {fileID: 251008180}
-  _initialLives: 15
-  _initialSpecials: 15
+  _initialLives: 5
+  _initialSpecials: 5
 --- !u!4 &989658132
 Transform:
   m_ObjectHideFlags: 0
@@ -3089,8 +3090,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 195, y: -30}
-  m_SizeDelta: {x: 390, y: 60}
+  m_AnchoredPosition: {x: 145, y: -30}
+  m_SizeDelta: {x: 290, y: 60}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2134546373
 MonoBehaviour:
@@ -3108,6 +3109,7 @@ MonoBehaviour:
     type: 3}
   _multiplierPrefab: {fileID: 7163321498401782731, guid: 449822586f3b6954a9602cef5898ec66,
     type: 3}
+  _initialValue: 5
 --- !u!114 &2134546374
 MonoBehaviour:
   m_ObjectHideFlags: 0

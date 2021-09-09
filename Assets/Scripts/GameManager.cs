@@ -8,19 +8,10 @@ public class GameManager : MonoBehaviour
     [SerializeField] private MultipleElementsLayout _livesLayout;
     [SerializeField] private MultipleElementsLayout _specialsLayout;
 
-    [SerializeField] private int _initialLives;
-    [SerializeField] private int _initialSpecials;
-
     private string _scoreFormat = "0000000000";
     private int _score;
     private int _lives;
     private int _specials;
-
-    void Start()
-    {
-        AddLives(_initialLives);
-        AddSpecials(_initialSpecials);
-    }
 
     public void AddScore(int value)
     {
