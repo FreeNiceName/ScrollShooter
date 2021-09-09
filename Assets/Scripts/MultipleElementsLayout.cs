@@ -5,7 +5,6 @@ public class MultipleElementsLayout : MonoBehaviour
 {
     [SerializeField] private GameObject _layoutElementPrefab;
     [SerializeField] private GameObject _multiplierPrefab;
-    [SerializeField] private int _initialValue;
 
     private int _maxElementsWithoutMultiplier; //maximum number of displayed elements without multiplier
     private GameObject[] _elements;
@@ -43,15 +42,6 @@ public class MultipleElementsLayout : MonoBehaviour
         }
 
         CreateEmptySpace().transform.SetParent(transform, false);
-
-        Bind();
-    }
-
-    //GameObject with this script must have same name as game manager property to bind with
-    private void Bind()
-    {
-        var binding = new Binding(GameManager.Instance, this, gameObject.name, nameof(Value));
-        GameManager.Instance.Bindings.Add(binding);
     }
 
     private int CalculateMaxElements()
