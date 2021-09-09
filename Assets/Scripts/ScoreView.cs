@@ -5,13 +5,16 @@ public class ScoreView : MonoBehaviour
 {
     private const string ScoreFormat = "0000000000";
     private Text _scoreText;
-    private int _score;
+    private uint _score;
 
-    public int Score
+    public uint Score
     {
         get => _score;
         set
         {
+            if (_score == value)
+                return;
+
             _score = value;
             _scoreText.text = _score.ToString(ScoreFormat);
         }

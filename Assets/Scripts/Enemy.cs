@@ -5,10 +5,13 @@ public class Enemy : MonoBehaviour
 {
     [SerializeField] private int _health;
     [SerializeField] private Material _flashMaterial;
+    [SerializeField] private int _collisionDamage;
 
     private MeshRenderer _renderer;
     private Material _originalMaterial;
     private float _flashDuration = 0.1f;
+
+    public int CollisionDamage { get => _collisionDamage; }
 
     void Start()
     {
@@ -23,19 +26,16 @@ public class Enemy : MonoBehaviour
             if (other.gameObject.name.Contains("Player"))
             {
                 Destroy(other.gameObject);
-                _health--;
-                StartCoroutine(Blink());
+                StartCoroutine(Flash());
 
+                _health -= other.GetComponent<ProjectileController>().Damage;
                 if (_health <= 0)
-                {
                     Destroy(transform.parent.gameObject);
-                    Debug.Log("Enemy collided with player projectile");
-                }
             }
         }
     }
 
-    private IEnumerator Blink()
+    private IEnumerator Flash()
     {
         _renderer.material = _flashMaterial;
         yield return new WaitForSeconds(_flashDuration);

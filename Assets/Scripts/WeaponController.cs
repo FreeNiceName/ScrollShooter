@@ -4,6 +4,7 @@ public class WeaponController : MonoBehaviour
 {
     [SerializeField] private GameObject _projectilePrefab;
     [SerializeField] private float _cooldown;
+    [SerializeField] private int _damage;
     [SerializeField] private AudioClip _shootSound;
 
     private AudioSource _weaponAudio;
@@ -16,7 +17,8 @@ public class WeaponController : MonoBehaviour
 
     private void Shoot()
     {
-        Instantiate(_projectilePrefab, transform.position, _projectilePrefab.transform.rotation);
+        var projectile = Instantiate(_projectilePrefab, transform.position, _projectilePrefab.transform.rotation);
+        projectile.GetComponent<ProjectileController>().Damage = _damage;
         //_weaponAudio.PlayOneShot(_shootSound);
     }
 }

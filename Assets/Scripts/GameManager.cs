@@ -5,12 +5,13 @@ using UnityEngine.UI;
 
 public class GameManager : Singleton<GameManager>, INotifyPropertyChanged
 {
-    [SerializeField] private int _initialScore = 0;
+    [SerializeField] private uint _initialScore = 0;
     [SerializeField] private int _initialLives = 5;
     [SerializeField] private int _initialSpecials = 5;
     [SerializeField] private int _initialHealth = 100;
+    [SerializeField] private int _maxHealth = 100;
 
-    private int _score;
+    private uint _score;
     private int _lives;
     private int _specials;
     private int _health;
@@ -24,11 +25,14 @@ public class GameManager : Singleton<GameManager>, INotifyPropertyChanged
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
     }
 
-    public int Score
+    public uint Score
     {
         get => _score;
         set
         {
+            if (_score == value)
+                return;
+
             _score = value;
             NotifyPropertyChanged(nameof(Score));
         }
@@ -39,6 +43,12 @@ public class GameManager : Singleton<GameManager>, INotifyPropertyChanged
         get => _lives;
         set
         {
+            if (_lives == value)
+                return;
+
+            if (value < 0)
+                value = 0;
+
             _lives = value;
             NotifyPropertyChanged(nameof(Lives));
         }
@@ -49,6 +59,12 @@ public class GameManager : Singleton<GameManager>, INotifyPropertyChanged
         get => _specials;
         set
         {
+            if (_specials == value)
+                return;
+
+            if (value < 0)
+                value = 0;
+
             _specials = value;
             NotifyPropertyChanged(nameof(Specials));
         }
@@ -59,8 +75,19 @@ public class GameManager : Singleton<GameManager>, INotifyPropertyChanged
         get => _health;
         set
         {
+            if (_health == value)
+                return;
+
+            if (value > _maxHealth)
+                value = _maxHealth;
+            else if(value < 0)
+                value = 0;
+
             _health = value;
             NotifyPropertyChanged(nameof(Health));
+
+            if (_health == 0)
+                GameOver();
         }
     }
 
@@ -75,5 +102,11 @@ public class GameManager : Singleton<GameManager>, INotifyPropertyChanged
         Lives = _initialLives;
         Specials = _initialSpecials;
         Health = _initialHealth;
+    }
+
+    public void GameOver()
+    {
+        Debug.Log("Game over");
+        //TODO
     }
 }

@@ -6,6 +6,8 @@ public class ProjectileController : MonoBehaviour
     private float _zDestroy = 15;
     private Vector3 _direction;
 
+    public int Damage { get; set; }
+
     private void Start()
     {
         if (gameObject.name.Contains("Player"))

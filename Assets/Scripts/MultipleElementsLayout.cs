@@ -18,6 +18,9 @@ public class MultipleElementsLayout : MonoBehaviour
         get => _value;
         set
         {
+            if (_value == value)
+                return;
+
             _value = value;
             UpdateView();
         }

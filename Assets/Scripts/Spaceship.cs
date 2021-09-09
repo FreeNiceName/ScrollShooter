@@ -4,7 +4,7 @@ using UnityEngine;
 public class Spaceship : MonoBehaviour
 {
     private float _buffDuration = 5;
-    public bool HasInvulerability { get; private set; } = false;
+    private bool _hasInvulerability = false;
 
     private void OnTriggerEnter(Collider other)
     {
@@ -13,27 +13,25 @@ public class Spaceship : MonoBehaviour
             StartCoroutine(BuffCoroutine());
             Destroy(other.gameObject);
         }
-
-        if (other.CompareTag("Projectile"))
+        else if (other.CompareTag("Projectile"))
         {
             if (other.gameObject.name.Contains("Enemy"))
             {
+                GameManager.Instance.Health -= other.GetComponent<ProjectileController>().Damage;
                 Destroy(other.gameObject);
-                Debug.Log("Player collided with enemy projectile");
             }
         }
-
-        if (other.CompareTag("Enemy"))
+        else if (other.CompareTag("Enemy"))
         {
+            GameManager.Instance.Health -= other.GetComponent<Enemy>().CollisionDamage;
             Destroy(other.transform.parent.gameObject);
-            Debug.Log("Player collided with enemy");
         }
     }
 
     private IEnumerator BuffCoroutine()
     {
-        HasInvulerability = true;
+        _hasInvulerability = true;
         yield return new WaitForSeconds(_buffDuration);
-        HasInvulerability = false;
+        _hasInvulerability = false;
     }
 }
