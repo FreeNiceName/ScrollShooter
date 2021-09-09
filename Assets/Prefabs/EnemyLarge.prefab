@@ -103,6 +103,7 @@ MonoBehaviour:
   _health: 6
   _flashMaterial: {fileID: 2100000, guid: a7de074640bd0454faf6f2e812f11782, type: 2}
   _collisionDamage: 50
+  _scoreValue: 50
 --- !u!65 &3612404191090616156
 BoxCollider:
   m_ObjectHideFlags: 0

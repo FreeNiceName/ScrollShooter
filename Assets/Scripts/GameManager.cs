@@ -1,7 +1,6 @@
 using System.ComponentModel;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class GameManager : Singleton<GameManager>, INotifyPropertyChanged
 {
@@ -46,11 +45,11 @@ public class GameManager : Singleton<GameManager>, INotifyPropertyChanged
             if (_lives == value)
                 return;
 
-            if (value < 0)
-                value = 0;
-
             _lives = value;
             NotifyPropertyChanged(nameof(Lives));
+
+            if (_lives < 0)
+                GameOver();
         }
     }
 
@@ -87,7 +86,7 @@ public class GameManager : Singleton<GameManager>, INotifyPropertyChanged
             NotifyPropertyChanged(nameof(Health));
 
             if (_health == 0)
-                GameOver();
+                Death();
         }
     }
 
@@ -102,6 +101,11 @@ public class GameManager : Singleton<GameManager>, INotifyPropertyChanged
         Lives = _initialLives;
         Specials = _initialSpecials;
         Health = _initialHealth;
+    }
+
+    public void Death()
+    {
+        //TODO
     }
 
     public void GameOver()

@@ -6,6 +6,7 @@ public class Enemy : MonoBehaviour
     [SerializeField] private int _health;
     [SerializeField] private Material _flashMaterial;
     [SerializeField] private int _collisionDamage;
+    [SerializeField] private uint _scoreValue;
 
     private MeshRenderer _renderer;
     private Material _originalMaterial;
@@ -30,7 +31,10 @@ public class Enemy : MonoBehaviour
 
                 _health -= other.GetComponent<ProjectileController>().Damage;
                 if (_health <= 0)
+                {
+                    GameManager.Instance.Score += _scoreValue;
                     Destroy(transform.parent.gameObject);
+                }
             }
         }
     }
