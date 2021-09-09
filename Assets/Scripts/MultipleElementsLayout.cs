@@ -7,11 +7,22 @@ public class MultipleElementsLayout : MonoBehaviour
     [SerializeField] private GameObject _multiplierPrefab;
     [SerializeField] private int _initialValue;
 
-    private int _maxElements;
+    private int _maxElementsWithoutMultiplier; //maximum number of displayed elements without multiplier
     private GameObject[] _elements;
     private GameObject _multiplier;
     private Text _multiplierText;
     private bool _isReversed;
+    private int _value;
+
+    public int Value
+    {
+        get => _value;
+        set
+        {
+            _value = value;
+            UpdateView();
+        }
+    }
 
     void Start()
     {
@@ -21,10 +32,10 @@ public class MultipleElementsLayout : MonoBehaviour
         _multiplier.transform.SetParent(transform, false);
         _multiplierText = _multiplier.GetComponent<Text>();
 
-        _maxElements = CalculateMaxElements();
-        _elements = new GameObject[_maxElements];
+        _maxElementsWithoutMultiplier = CalculateMaxElements();
+        _elements = new GameObject[_maxElementsWithoutMultiplier];
 
-        for(var i = 0; i < _maxElements; ++i)
+        for(var i = 0; i < _maxElementsWithoutMultiplier; ++i)
         {
             var element = Instantiate(_layoutElementPrefab);
             element.transform.SetParent(transform, false);
@@ -32,7 +43,15 @@ public class MultipleElementsLayout : MonoBehaviour
         }
 
         CreateEmptySpace().transform.SetParent(transform, false);
-        UpdateValue(_initialValue);
+
+        Bind();
+    }
+
+    //GameObject with this script must have same name as game manager property to bind with
+    private void Bind()
+    {
+        var binding = new Binding(GameManager.Instance, this, gameObject.name, nameof(Value));
+        GameManager.Instance.Bindings.Add(binding);
     }
 
     private int CalculateMaxElements()
@@ -55,26 +74,26 @@ public class MultipleElementsLayout : MonoBehaviour
         return emptySpace;
     }
 
-    public void UpdateValue(int newValue)
+    private void UpdateView()
     {
-        if (newValue > _maxElements)
+        if (_value > _maxElementsWithoutMultiplier)
         {
             _elements[0].SetActive(true);
-            for (var i = 1; i < _maxElements; ++i)
+            for (var i = 1; i < _maxElementsWithoutMultiplier; ++i)
                 _elements[i].SetActive(false);
 
             _multiplier.SetActive(true);
             if (_isReversed)
-                _multiplierText.text = $"x {newValue}";
+                _multiplierText.text = $"x {_value}";
             else
-                _multiplierText.text = $"{newValue} x";
+                _multiplierText.text = $"{_value} x";
         }
         else
         {
             _multiplier.SetActive(false);
-            for (var i = 0; i < _maxElements; ++i)
+            for (var i = 0; i < _maxElementsWithoutMultiplier; ++i)
             {
-                if (i < newValue)
+                if (i < _value)
                     _elements[i].SetActive(true);
                 else
                     _elements[i].SetActive(false);
