@@ -35,6 +35,7 @@ public class MainMenu : MonoBehaviour
     {
         Time.timeScale = 1f;
         SceneManager.LoadScene("Game");
+        GameManager.Instance.Reset();
     }
 
     private void ToSettings()

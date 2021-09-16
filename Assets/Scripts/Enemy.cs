@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 
@@ -12,6 +13,7 @@ public class Enemy : MonoBehaviour
     private Material _originalMaterial;
     private float _flashDuration = 0.1f;
 
+    public event Action OnWallCollision;
     public int CollisionDamage { get => _collisionDamage; }
 
     void Start()
@@ -22,7 +24,11 @@ public class Enemy : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Projectile"))
+        if (other.CompareTag("Wall"))
+        {
+            OnWallCollision?.Invoke();
+        }
+        else if (other.CompareTag("Projectile"))
         {
             if (other.gameObject.name.Contains("Player"))
             {
@@ -33,7 +39,7 @@ public class Enemy : MonoBehaviour
                 if (_health <= 0)
                 {
                     GameManager.Instance.Score += _scoreValue;
-                    Destroy();
+                    Destroy(this);
                 }
             }
         }
@@ -46,7 +52,7 @@ public class Enemy : MonoBehaviour
         _renderer.material = _originalMaterial;
     }
 
-    public void Destroy()
+    private void OnDestroy()
     {
         Destroy(transform.parent.gameObject);
     }

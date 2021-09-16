@@ -6,21 +6,21 @@ public class EnemyController : MonoBehaviour
     private float _zDestroy = -17;
 
     [SerializeField] private float _xSpeed = 5;
-    private float _xBound = 26;
-    private bool _direction;
 
     private float _rotSpeed = 2f;
     private float _maxRot = 30;
 
     private Transform _model;
 
-    // Start is called before the first frame update
+    public Vector3 XDirection { get; set; }
+
     void Start()
     {
-        _model = transform.GetChild(0);
+        var enemy = transform.GetComponentInChildren<Enemy>();
+        _model = enemy.gameObject.transform;
+        enemy.OnWallCollision += SwitchXDirection;
     }
 
-    // Update is called once per frame
     void Update()
     {
         if(_zSpeed !=0)
@@ -40,23 +40,23 @@ public class EnemyController : MonoBehaviour
 
     private void MoveSideToSide()
     {
-        transform.Translate(Vector3.right * (_direction ? 1 : -1) * _xSpeed * Time.deltaTime);
-        if ((transform.position.x > _xBound) && _direction 
-            || (transform.position.x < -_xBound) && !_direction)
-            _direction = !_direction;
+        transform.Translate(XDirection * _xSpeed * Time.deltaTime);
         RotateOnMoving();
     }
 
     private void RotateOnMoving()
     {
-        var targetAngle = 0f;
-
-        if (_direction)
-            targetAngle = -_maxRot;
-        else
-            targetAngle = _maxRot;
+        var targetAngle = -(_maxRot * XDirection.x);
 
         var euler = Quaternion.Euler(_model.eulerAngles.x, _model.eulerAngles.y, targetAngle);
         _model.rotation = Quaternion.Lerp(_model.rotation, euler, Time.deltaTime * _rotSpeed);
+    }
+
+    private void SwitchXDirection()
+    {
+        if (XDirection == Vector3.right)
+            XDirection = Vector3.left;
+        else
+            XDirection = Vector3.right;
     }
 }

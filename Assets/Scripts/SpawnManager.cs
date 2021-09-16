@@ -16,11 +16,11 @@ public class SpawnManager : MonoBehaviour
 
     void Start()
     {
-        InvokeRepeating("SpawnEnemy", _spawnDelay, _enemySpawnInterval);
+        InvokeRepeating("SpawnRandomEnemy", _spawnDelay, _enemySpawnInterval);
         InvokeRepeating("SpawnPowerup", _spawnDelay, _powerupSpawnInterval);
     }
 
-    private void SpawnEnemy()
+    private void SpawnRandomEnemy()
     {
         var enemyIndex = Random.Range(0, _enemyPrefabs.Length);
         var enemy = _enemyPrefabs[enemyIndex];
@@ -36,11 +36,17 @@ public class SpawnManager : MonoBehaviour
                 }
             default:
                 {
-                    Instantiate(enemy, NextSpawnPosition(), enemy.transform.rotation);
+                    SpawnEnemy(enemy, NextSpawnPosition(), NextDirectionX());
                     break;
                 }
 
         }
+    }
+
+    private void SpawnEnemy(GameObject enemyPrefab, Vector3 spawnPos, Vector3 moveDirection)
+    {
+        var enemy = Instantiate(enemyPrefab, spawnPos, enemyPrefab.transform.rotation);
+        enemy.GetComponent<EnemyController>().XDirection = moveDirection;
     }
 
     private void SpawnPowerup()
@@ -55,12 +61,20 @@ public class SpawnManager : MonoBehaviour
         return spawnPos;
     }
 
+    private Vector3 NextDirectionX()
+    {
+        if (Random.value > 0.5)
+            return Vector3.right;
+        return Vector3.left;
+    }
+
     private IEnumerator SpawnSwarmEnemies(GameObject enemy, int swarmSize, float spawnInterval)
     {
         var spawnPos = NextSpawnPosition();
+        var xDirection = NextDirectionX();
         for (var i = 0; i < swarmSize; ++i)
         {
-            Instantiate(enemy, spawnPos, enemy.transform.rotation);
+            SpawnEnemy(enemy, spawnPos, xDirection);
             yield return new WaitForSeconds(spawnInterval);
         }
     }

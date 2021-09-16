@@ -1,3 +1,4 @@
+using System;
 using System.ComponentModel;
 using System.Collections.Generic;
 using UnityEngine;
@@ -18,6 +19,8 @@ public class GameManager : Singleton<GameManager>, INotifyPropertyChanged
     public readonly List<Binding> Bindings = new List<Binding>();
 
     public event PropertyChangedEventHandler PropertyChanged;
+    public event Action OnDeath;
+    public event Action OnGameOver;
 
     private void NotifyPropertyChanged(string propertyName)
     {
@@ -49,7 +52,7 @@ public class GameManager : Singleton<GameManager>, INotifyPropertyChanged
             NotifyPropertyChanged(nameof(Lives));
 
             if (_lives < 0)
-                GameOver();
+                OnGameOver?.Invoke();
         }
     }
 
@@ -86,8 +89,13 @@ public class GameManager : Singleton<GameManager>, INotifyPropertyChanged
             NotifyPropertyChanged(nameof(Health));
 
             if (_health == 0)
-                Death();
+                OnDeath?.Invoke();
         }
+    }
+
+    private void Start()
+    {
+        OnDeath += Death;
     }
 
     private void Awake()
@@ -103,9 +111,10 @@ public class GameManager : Singleton<GameManager>, INotifyPropertyChanged
         Health = _initialHealth;
     }
 
-    public void Death()
+    private void Death()
     {
-        //TODO
+        Lives--;
+        Health = _maxHealth;
     }
 
     public void GameOver()

@@ -2,6 +2,8 @@
 
 public class PlayerController : MonoBehaviour
 {
+    private Vector3 _defaultPosition;
+
     private float _speed = 10;
     private float _zBound = 14f;
     private float _xBound = 26f;
@@ -14,6 +16,8 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         _spaceship = transform.GetChild(0);
+        _defaultPosition = transform.position;
+        GameManager.Instance.OnDeath += ResetPosition;
     }
 
     void FixedUpdate()
@@ -57,5 +61,10 @@ public class PlayerController : MonoBehaviour
 
         var euler = Quaternion.Euler(_spaceship.eulerAngles.x, _spaceship.eulerAngles.y, targetAngle);
         _spaceship.rotation = Quaternion.Lerp(_spaceship.rotation, euler, Time.deltaTime * _rotSpeed);
+    }
+
+    private void ResetPosition()
+    {
+        transform.position = _defaultPosition;
     }
 }

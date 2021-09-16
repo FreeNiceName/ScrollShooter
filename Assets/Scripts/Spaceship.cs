@@ -12,13 +12,14 @@ public class Spaceship : MonoBehaviour
     {
         _shield = transform.Find("Shield").gameObject;
         _shield?.SetActive(false);
+        GameManager.Instance.OnDeath += ActivateShield;
     }
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Powerup"))
         {
-            StartCoroutine(ShieldCoroutine());
+            ActivateShield();
             Destroy(other.gameObject);
         }
         else if (other.CompareTag("Projectile"))
@@ -33,8 +34,13 @@ public class Spaceship : MonoBehaviour
         {
             var enemy = other.GetComponent<Enemy>();
             TakeDamage(enemy.CollisionDamage);
-            enemy.Destroy();
+            Destroy(other.gameObject);
         }
+    }
+
+    private void ActivateShield()
+    {
+        StartCoroutine(ShieldCoroutine());
     }
 
     private IEnumerator ShieldCoroutine()
