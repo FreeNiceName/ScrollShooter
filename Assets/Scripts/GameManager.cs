@@ -1,6 +1,5 @@
 using System;
 using System.ComponentModel;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class GameManager : Singleton<GameManager>, INotifyPropertyChanged
@@ -15,8 +14,6 @@ public class GameManager : Singleton<GameManager>, INotifyPropertyChanged
     private int _lives;
     private int _specials;
     private int _health;
-
-    public readonly List<Binding> Bindings = new List<Binding>();
 
     public event PropertyChangedEventHandler PropertyChanged;
     public event Action OnDeath;
@@ -93,28 +90,39 @@ public class GameManager : Singleton<GameManager>, INotifyPropertyChanged
         }
     }
 
-    private void Start()
-    {
-        OnDeath += Death;
-    }
-
     private void Awake()
     {
-        Reset();
+        HardReset();
     }
 
-    public void Reset()
+    private void PurgeEvents()
     {
-        Score = _initialScore;
-        Lives = _initialLives;
-        Specials = _initialSpecials;
-        Health = _initialHealth;
+        PropertyChanged = null;
+        OnDeath = null;
+        OnGameOver = null;
     }
 
     private void Death()
     {
         Lives--;
         Health = _maxHealth;
+    }
+
+    //Reset events and values
+    public void HardReset()
+    {
+        SoftReset();
+        Score = _initialScore;
+        Lives = _initialLives;
+        Specials = _initialSpecials;
+        Health = _initialHealth;
+    }
+
+    //Reset events
+    public void SoftReset()
+    {
+        PurgeEvents();
+        OnDeath += Death;
     }
 
     public void GameOver()

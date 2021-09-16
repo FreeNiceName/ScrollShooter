@@ -12,6 +12,8 @@ public class InGameUI : MonoBehaviour
     private GameObject _pauseMenu;
     private bool _isPaused = false;
 
+    private List<Binding> _bindings = new List<Binding>();
+
     // Start is called before the first frame update
     void Start()
     {
@@ -33,12 +35,10 @@ public class InGameUI : MonoBehaviour
 
     private void InitHudBindings()
     {
-        var bindings = new List<Binding>();
-        bindings.Add(new Binding(GameManager.Instance, _scoreView, "Score", "Score"));
-        bindings.Add(new Binding(GameManager.Instance, _specialsView, "Specials", "Value"));
-        bindings.Add(new Binding(GameManager.Instance, _livesView, "Lives", "Value"));
-        bindings.Add(new Binding(GameManager.Instance, _healthView, "Health", "value"));
-        GameManager.Instance.Bindings.AddRange(bindings);
+        _bindings.Add(new Binding(GameManager.Instance, _scoreView, "Score", "Score"));
+        _bindings.Add(new Binding(GameManager.Instance, _specialsView, "Specials", "Value"));
+        _bindings.Add(new Binding(GameManager.Instance, _livesView, "Lives", "Value"));
+        _bindings.Add(new Binding(GameManager.Instance, _healthView, "Health", "value"));
     }
 
     public void Pause()
