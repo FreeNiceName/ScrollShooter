@@ -31,8 +31,9 @@ public class Spaceship : MonoBehaviour
         }
         else if (other.CompareTag("Enemy"))
         {
-            TakeDamage(other.GetComponent<Enemy>().CollisionDamage);
-            Destroy(other.transform.parent.gameObject);
+            var enemy = other.GetComponent<Enemy>();
+            TakeDamage(enemy.CollisionDamage);
+            enemy.Destroy();
         }
     }
 

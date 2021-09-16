@@ -33,7 +33,7 @@ public class Enemy : MonoBehaviour
                 if (_health <= 0)
                 {
                     GameManager.Instance.Score += _scoreValue;
-                    Destroy(transform.parent.gameObject);
+                    Destroy();
                 }
             }
         }
@@ -44,5 +44,10 @@ public class Enemy : MonoBehaviour
         _renderer.material = _flashMaterial;
         yield return new WaitForSeconds(_flashDuration);
         _renderer.material = _originalMaterial;
+    }
+
+    public void Destroy()
+    {
+        Destroy(transform.parent.gameObject);
     }
 }
