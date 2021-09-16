@@ -790,7 +790,6 @@ MonoBehaviour:
     type: 3}
   _multiplierPrefab: {fileID: 7163321498401782731, guid: 449822586f3b6954a9602cef5898ec66,
     type: 3}
-  _initialValue: 5
 --- !u!1 &309044482
 GameObject:
   m_ObjectHideFlags: 0
@@ -2352,6 +2351,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1795245944598103669, guid: 7e4444aa102913340b1b7df749dd9dfe,
+        type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1795245944598103669, guid: 7e4444aa102913340b1b7df749dd9dfe,
+        type: 3}
+      propertyPath: m_ReceiveShadows
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3803994672372526797, guid: 7e4444aa102913340b1b7df749dd9dfe,
         type: 3}
       propertyPath: simulationSpeed
@@ -2441,6 +2450,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 8891430683591705405, guid: 7e4444aa102913340b1b7df749dd9dfe,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7e4444aa102913340b1b7df749dd9dfe, type: 3}
@@ -3077,7 +3091,6 @@ MonoBehaviour:
     type: 3}
   _multiplierPrefab: {fileID: 7163321498401782731, guid: 449822586f3b6954a9602cef5898ec66,
     type: 3}
-  _initialValue: 5
 --- !u!114 &2134546374
 MonoBehaviour:
   m_ObjectHideFlags: 0
