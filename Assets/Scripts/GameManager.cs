@@ -92,24 +92,21 @@ public class GameManager : MonoBehaviour, INotifyPropertyChanged
 
     private void Start()
     {
+        InitValues();
+        Death += OnDeath;
+    }
+
+    private void InitValues()
+    {
         Score = _initialScore;
         Lives = _initialLives;
         Specials = _initialSpecials;
         Health = _initialHealth;
-
-        Death += OnDeath;
-        GameOver += OnGameOver;
     }
 
     private void OnDeath()
     {
         Lives--;
         Health = _maxHealth;
-    }
-
-    public void OnGameOver()
-    {
-        Debug.Log("Game over");
-        //TODO
     }
 }

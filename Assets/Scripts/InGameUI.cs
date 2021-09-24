@@ -1,27 +1,20 @@
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class InGameUI : MonoBehaviour
 {
-    [SerializeField] private ScoreView _scoreView;
-    [SerializeField] private MultipleElementsLayout _specialsView;
-    [SerializeField] private MultipleElementsLayout _livesView;
-    [SerializeField] private Slider _healthView;
-
-    private GameManager _gameManager;
     private GameObject _pauseMenu;
+    private GameObject _gameOverWindow;
     private bool _isPaused = false;
-
-    private List<Binding> _bindings = new List<Binding>();
+    private bool _isGameOver = false;
 
     // Start is called before the first frame update
     void Start()
     {
         _pauseMenu = transform.Find("PauseMenu").gameObject;
-        _gameManager = FindObjectOfType<GameManager>();
+        _gameOverWindow = transform.Find("GameOverWindow").gameObject;
 
-        InitHudBindings();
+        var gameManager = FindObjectOfType<GameManager>();
+        gameManager.GameOver += OnGameOver;
     }
 
     // Update is called once per frame
@@ -29,19 +22,18 @@ public class InGameUI : MonoBehaviour
     {
         if(Input.GetKeyDown(KeyCode.Escape))
         {
-            if (!_isPaused)
+            if (!_isPaused && !_isGameOver)
                 Pause();
             else if (_pauseMenu.activeSelf)
                 Resume();
         }
     }
 
-    private void InitHudBindings()
+    public void OnGameOver()
     {
-        _bindings.Add(new Binding(_gameManager, _scoreView, "Score", "Score"));
-        _bindings.Add(new Binding(_gameManager, _specialsView, "Specials", "Value"));
-        _bindings.Add(new Binding(_gameManager, _livesView, "Lives", "Value"));
-        _bindings.Add(new Binding(_gameManager, _healthView, "Health", "value"));
+        _gameOverWindow.SetActive(true);
+        Time.timeScale = 0f;
+        _isGameOver = true;
     }
 
     public void Pause()
