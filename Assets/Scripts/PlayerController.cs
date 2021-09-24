@@ -2,6 +2,8 @@
 
 public class PlayerController : MonoBehaviour
 {
+    [SerializeField] private GameObject _specialPrefab;
+
     private Vector3 _defaultPosition;
 
     private float _speed = 10;
@@ -13,13 +15,24 @@ public class PlayerController : MonoBehaviour
 
     private Transform _spaceship;
 
+    private GameManager _gameManager;
+
     void Start()
     {
         _spaceship = transform.GetChild(0);
         _defaultPosition = transform.position;
 
-        var gameManager = FindObjectOfType<GameManager>();
-        gameManager.Death += ResetPosition;
+        _gameManager = FindObjectOfType<GameManager>();
+        _gameManager.Death += ResetPosition;
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Space) && _gameManager.Missiles > 0)
+        {
+            _gameManager.Missiles--;
+            Instantiate(_specialPrefab, transform.position, _specialPrefab.transform.rotation);
+        }
     }
 
     void FixedUpdate()

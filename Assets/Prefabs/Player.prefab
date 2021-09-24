@@ -99,6 +99,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ceaa2391ee0f27c4994bdaf485317d02, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _shieldDuration: 5
 --- !u!54 &5004249321407697240
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -172,6 +173,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7ec716e95b549164090e15452b138cf4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _specialPrefab: {fileID: 5225357083789665473, guid: b62c590e94bf6d441a08530043d7d944,
+    type: 3}
 --- !u!1 &8891430683591705405
 GameObject:
   m_ObjectHideFlags: 0

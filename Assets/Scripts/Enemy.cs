@@ -35,15 +35,26 @@ public class Enemy : MonoBehaviour
             if (other.gameObject.name.Contains("Player"))
             {
                 Destroy(other.gameObject);
-                StartCoroutine(Flash());
 
-                _health -= other.GetComponent<ProjectileController>().Damage;
-                if (_health <= 0)
-                {
-                    _gameManager.Score += _scoreValue;
-                    Destroy(this);
-                }
+                var damage = other.GetComponent<ProjectileController>().Damage;
+                TakeDamage(damage);
             }
+        }
+        else if(other.CompareTag("BlastWave"))
+        {
+            var damage = other.GetComponent<BlastWaveController>().Damage;
+            TakeDamage(damage);
+        }
+    }
+
+    private void TakeDamage(int damage)
+    {
+        StartCoroutine(Flash());
+        _health -= damage;
+        if (_health <= 0)
+        {
+            _gameManager.Score += _scoreValue;
+            Destroy(this);
         }
     }
 

@@ -5,7 +5,7 @@ using UnityEngine.UI;
 public class HUD : MonoBehaviour
 {
     [SerializeField] private ScoreView _scoreView;
-    [SerializeField] private MultipleElementsLayout _specialsView;
+    [SerializeField] private MultipleElementsLayout _missilesView;
     [SerializeField] private MultipleElementsLayout _livesView;
     [SerializeField] private Slider _healthView;
 
@@ -19,9 +19,9 @@ public class HUD : MonoBehaviour
     private void InitBindings()
     {
         var gameManager = FindObjectOfType<GameManager>();
-        _bindings.Add(new Binding(gameManager, _scoreView, "Score", "Score"));
-        _bindings.Add(new Binding(gameManager, _specialsView, "Specials", "Value"));
-        _bindings.Add(new Binding(gameManager, _livesView, "Lives", "Value"));
-        _bindings.Add(new Binding(gameManager, _healthView, "Health", "value"));
+        _bindings.Add(new Binding(gameManager, _scoreView, nameof(gameManager.Score), nameof(_scoreView.Score)));
+        _bindings.Add(new Binding(gameManager, _missilesView, nameof(gameManager.Missiles), nameof(_missilesView.Value)));
+        _bindings.Add(new Binding(gameManager, _livesView, nameof(gameManager.Lives), nameof(_livesView.Value)));
+        _bindings.Add(new Binding(gameManager, _healthView, nameof(gameManager.Health), nameof(_healthView.value)));
     }
 }

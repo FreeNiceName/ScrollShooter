@@ -8,6 +8,7 @@ TagManager:
   - Powerup
   - Projectile
   - Wall
+  - BlastWave
   layers:
   - Default
   - TransparentFX

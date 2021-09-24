@@ -6,13 +6,13 @@ public class GameManager : MonoBehaviour, INotifyPropertyChanged
 {
     [SerializeField] private uint _initialScore = 0;
     [SerializeField] private int _initialLives = 5;
-    [SerializeField] private int _initialSpecials = 5;
+    [SerializeField] private int _initialMissiles = 5;
     [SerializeField] private int _initialHealth = 100;
     [SerializeField] private int _maxHealth = 100;
 
     private uint _score;
     private int _lives;
-    private int _specials;
+    private int _missiles;
     private int _health;
 
     public event PropertyChangedEventHandler PropertyChanged;
@@ -53,19 +53,19 @@ public class GameManager : MonoBehaviour, INotifyPropertyChanged
         }
     }
 
-    public int Specials
+    public int Missiles
     {
-        get => _specials;
+        get => _missiles;
         set
         {
-            if (_specials == value)
+            if (_missiles == value)
                 return;
 
             if (value < 0)
                 value = 0;
 
-            _specials = value;
-            NotifyPropertyChanged(nameof(Specials));
+            _missiles = value;
+            NotifyPropertyChanged(nameof(Missiles));
         }
     }
 
@@ -100,7 +100,7 @@ public class GameManager : MonoBehaviour, INotifyPropertyChanged
     {
         Score = _initialScore;
         Lives = _initialLives;
-        Specials = _initialSpecials;
+        Missiles = _initialMissiles;
         Health = _initialHealth;
     }
 
