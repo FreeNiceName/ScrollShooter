@@ -17,7 +17,9 @@ public class PlayerController : MonoBehaviour
     {
         _spaceship = transform.GetChild(0);
         _defaultPosition = transform.position;
-        GameManager.Instance.OnDeath += ResetPosition;
+
+        var gameManager = FindObjectOfType<GameManager>();
+        gameManager.Death += ResetPosition;
     }
 
     void FixedUpdate()

@@ -2,7 +2,7 @@ using System;
 using System.ComponentModel;
 using UnityEngine;
 
-public class GameManager : Singleton<GameManager>, INotifyPropertyChanged
+public class GameManager : MonoBehaviour, INotifyPropertyChanged
 {
     [SerializeField] private uint _initialScore = 0;
     [SerializeField] private int _initialLives = 5;
@@ -16,8 +16,8 @@ public class GameManager : Singleton<GameManager>, INotifyPropertyChanged
     private int _health;
 
     public event PropertyChangedEventHandler PropertyChanged;
-    public event Action OnDeath;
-    public event Action OnGameOver;
+    public event Action Death;
+    public event Action GameOver;
 
     private void NotifyPropertyChanged(string propertyName)
     {
@@ -49,7 +49,7 @@ public class GameManager : Singleton<GameManager>, INotifyPropertyChanged
             NotifyPropertyChanged(nameof(Lives));
 
             if (_lives < 0)
-                OnGameOver?.Invoke();
+                GameOver?.Invoke();
         }
     }
 
@@ -86,46 +86,28 @@ public class GameManager : Singleton<GameManager>, INotifyPropertyChanged
             NotifyPropertyChanged(nameof(Health));
 
             if (_health == 0)
-                OnDeath?.Invoke();
+                Death?.Invoke();
         }
     }
 
-    private void Awake()
+    private void Start()
     {
-        HardReset();
+        Score = _initialScore;
+        Lives = _initialLives;
+        Specials = _initialSpecials;
+        Health = _initialHealth;
+
+        Death += OnDeath;
+        GameOver += OnGameOver;
     }
 
-    private void PurgeEvents()
-    {
-        PropertyChanged = null;
-        OnDeath = null;
-        OnGameOver = null;
-    }
-
-    private void Death()
+    private void OnDeath()
     {
         Lives--;
         Health = _maxHealth;
     }
 
-    //Reset events and values
-    public void HardReset()
-    {
-        SoftReset();
-        Score = _initialScore;
-        Lives = _initialLives;
-        Specials = _initialSpecials;
-        Health = _initialHealth;
-    }
-
-    //Reset events
-    public void SoftReset()
-    {
-        PurgeEvents();
-        OnDeath += Death;
-    }
-
-    public void GameOver()
+    public void OnGameOver()
     {
         Debug.Log("Game over");
         //TODO

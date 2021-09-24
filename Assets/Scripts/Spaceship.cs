@@ -5,6 +5,7 @@ public class Spaceship : MonoBehaviour
 {
     [SerializeField] private float _shieldDuration = 5;
 
+    private GameManager _gameManager;
     private GameObject _shield;
     private bool _hasShield = false;
 
@@ -12,7 +13,8 @@ public class Spaceship : MonoBehaviour
     {
         _shield = transform.Find("Shield").gameObject;
         _shield?.SetActive(false);
-        GameManager.Instance.OnDeath += ActivateShield;
+        _gameManager = FindObjectOfType<GameManager>();
+        _gameManager.Death += ActivateShield;
     }
 
     private void OnTriggerEnter(Collider other)
@@ -55,6 +57,6 @@ public class Spaceship : MonoBehaviour
     private void TakeDamage(int damage)
     {
         if(!_hasShield)
-            GameManager.Instance.Health -= damage;
+            _gameManager.Health -= damage;
     }
 }

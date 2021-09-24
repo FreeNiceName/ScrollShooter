@@ -9,6 +9,7 @@ public class InGameUI : MonoBehaviour
     [SerializeField] private MultipleElementsLayout _livesView;
     [SerializeField] private Slider _healthView;
 
+    private GameManager _gameManager;
     private GameObject _pauseMenu;
     private bool _isPaused = false;
 
@@ -18,6 +19,8 @@ public class InGameUI : MonoBehaviour
     void Start()
     {
         _pauseMenu = transform.Find("PauseMenu").gameObject;
+        _gameManager = FindObjectOfType<GameManager>();
+
         InitHudBindings();
     }
 
@@ -35,10 +38,10 @@ public class InGameUI : MonoBehaviour
 
     private void InitHudBindings()
     {
-        _bindings.Add(new Binding(GameManager.Instance, _scoreView, "Score", "Score"));
-        _bindings.Add(new Binding(GameManager.Instance, _specialsView, "Specials", "Value"));
-        _bindings.Add(new Binding(GameManager.Instance, _livesView, "Lives", "Value"));
-        _bindings.Add(new Binding(GameManager.Instance, _healthView, "Health", "value"));
+        _bindings.Add(new Binding(_gameManager, _scoreView, "Score", "Score"));
+        _bindings.Add(new Binding(_gameManager, _specialsView, "Specials", "Value"));
+        _bindings.Add(new Binding(_gameManager, _livesView, "Lives", "Value"));
+        _bindings.Add(new Binding(_gameManager, _healthView, "Health", "value"));
     }
 
     public void Pause()

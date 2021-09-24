@@ -9,6 +9,7 @@ public class Enemy : MonoBehaviour
     [SerializeField] private int _collisionDamage;
     [SerializeField] private uint _scoreValue;
 
+    private GameManager _gameManager;
     private MeshRenderer _renderer;
     private Material _originalMaterial;
     private float _flashDuration = 0.1f;
@@ -20,6 +21,7 @@ public class Enemy : MonoBehaviour
     {
         _renderer = GetComponent<MeshRenderer>();
         _originalMaterial = _renderer.material;
+        _gameManager = FindObjectOfType<GameManager>();
     }
 
     private void OnTriggerEnter(Collider other)
@@ -38,7 +40,7 @@ public class Enemy : MonoBehaviour
                 _health -= other.GetComponent<ProjectileController>().Damage;
                 if (_health <= 0)
                 {
-                    GameManager.Instance.Score += _scoreValue;
+                    _gameManager.Score += _scoreValue;
                     Destroy(this);
                 }
             }
