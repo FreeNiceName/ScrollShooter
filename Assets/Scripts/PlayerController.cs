@@ -29,11 +29,8 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space) && _gameManager.Missiles > 0)
-        {
-            _gameManager.Missiles--;
-            Instantiate(_specialPrefab, transform.position, _specialPrefab.transform.rotation);
-        }
+        if (Input.GetKeyDown(KeyCode.Space))
+            ShootMissile();
     }
 
     void FixedUpdate()
@@ -82,5 +79,14 @@ public class PlayerController : MonoBehaviour
     private void ResetPosition()
     {
         transform.position = _defaultPosition;
+    }
+
+    public void ShootMissile()
+    {
+        if(_gameManager.Missiles > 0)
+        {
+            _gameManager.Missiles--;
+            Instantiate(_specialPrefab, transform.position, _specialPrefab.transform.rotation);
+        }
     }
 }

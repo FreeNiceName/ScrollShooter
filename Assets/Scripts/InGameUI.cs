@@ -1,7 +1,9 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class InGameUI : MonoBehaviour
 {
+    private PlayerController _playerController;
     private GameObject _pauseMenu;
     private GameObject _gameOverWindow;
     private bool _isPaused = false;
@@ -10,11 +12,15 @@ public class InGameUI : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        _playerController = FindObjectOfType<PlayerController>();
+
         _pauseMenu = transform.Find("PauseMenu").gameObject;
         _gameOverWindow = transform.Find("GameOverWindow").gameObject;
 
         var gameManager = FindObjectOfType<GameManager>();
         gameManager.GameOver += OnGameOver;
+
+        ButtonsInit();
     }
 
     // Update is called once per frame
@@ -26,6 +32,23 @@ public class InGameUI : MonoBehaviour
                 Pause();
             else if (_pauseMenu.activeSelf)
                 Resume();
+        }
+    }
+
+    private void ButtonsInit()
+    {
+        var buttons = GetComponentsInChildren<Button>();
+
+        for (var i = 0; i < buttons.Length; ++i)
+        {
+            var button = buttons[i];
+
+            if (button.name.Contains("Pause"))
+                button.onClick.AddListener(Pause);
+            if (button.name.Contains("Missile"))
+                button.onClick.AddListener(_playerController.ShootMissile);
+            //if (button.name.Contains("Fire"))
+            //    button.onClick.AddListener(ToMenu);
         }
     }
 

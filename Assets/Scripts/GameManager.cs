@@ -5,7 +5,7 @@ using UnityEngine;
 public class GameManager : MonoBehaviour, INotifyPropertyChanged
 {
     [SerializeField] private uint _initialScore = 0;
-    [SerializeField] private int _initialLives = 5;
+    [SerializeField] private int _initialLives = 3;
     [SerializeField] private int _initialMissiles = 5;
     [SerializeField] private int _initialHealth = 100;
     [SerializeField] private int _maxHealth = 100;

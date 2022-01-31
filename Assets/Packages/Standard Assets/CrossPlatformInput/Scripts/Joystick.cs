@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
 namespace UnityStandardAssets.CrossPlatformInput
@@ -25,6 +26,8 @@ namespace UnityStandardAssets.CrossPlatformInput
 		CrossPlatformInputManager.VirtualAxis m_HorizontalVirtualAxis; // Reference to the joystick in the cross platform input
 		CrossPlatformInputManager.VirtualAxis m_VerticalVirtualAxis; // Reference to the joystick in the cross platform input
 
+		float m_MovementRange;
+
 		void OnEnable()
 		{
 			CreateVirtualAxes();
@@ -33,13 +36,23 @@ namespace UnityStandardAssets.CrossPlatformInput
         void Start()
         {
             m_StartPos = transform.position;
-        }
+
+			CanvasScaler canvasScaler = GetComponentInParent<CanvasScaler>();
+			if (canvasScaler != null)
+			{
+				m_MovementRange = canvasScaler.transform.localScale.x * MovementRange;
+			}
+			else
+			{
+				m_MovementRange = MovementRange;
+			}
+		}
 
 		void UpdateVirtualAxes(Vector3 value)
 		{
 			var delta = m_StartPos - value;
 			delta.y = -delta.y;
-			delta /= MovementRange;
+			delta /= m_MovementRange;
 			if (m_UseX)
 			{
 				m_HorizontalVirtualAxis.Update(-delta.x);
@@ -89,7 +102,7 @@ namespace UnityStandardAssets.CrossPlatformInput
 				newPos.y = delta;
 			}
 			//transform.position = new Vector3(m_StartPos.x + newPos.x, m_StartPos.y + newPos.y, m_StartPos.z + newPos.z);
-			transform.position = Vector3.ClampMagnitude(new Vector3(newPos.x, newPos.y, newPos.z), MovementRange) + m_StartPos;
+			transform.position = Vector3.ClampMagnitude(new Vector3(newPos.x, newPos.y, newPos.z), m_MovementRange) + m_StartPos;
 			UpdateVirtualAxes(transform.position);
 		}
 
