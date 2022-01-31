@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityStandardAssets.CrossPlatformInput;
 
 public class PlayerController : MonoBehaviour
 {
@@ -43,8 +44,8 @@ public class PlayerController : MonoBehaviour
 
     private void MovePlayer()
     {
-        var verticalInput = Input.GetAxis("Vertical");
-        var horizontalInput = Input.GetAxis("Horizontal");
+        var verticalInput = CrossPlatformInputManager.GetAxis("Vertical");
+        var horizontalInput = CrossPlatformInputManager.GetAxis("Horizontal");
 
         transform.Translate(Vector3.forward * Time.deltaTime * _speed * verticalInput);
         transform.Translate(Vector3.right * Time.deltaTime * _speed * horizontalInput);

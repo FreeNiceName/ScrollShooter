@@ -151,7 +151,7 @@ TextureImporter:
     serializedVersion: 2
     filterMode: 1
     aniso: 16
-    mipBias: -100
+    mipBias: 0
     wrapU: 1
     wrapV: 1
     wrapW: 1
@@ -253,13 +253,13 @@ TextureImporter:
       name: jotstick_back
       rect:
         serializedVersion: 2
-        x: 2082
-        y: 3077
-        width: 961
-        height: 963
+        x: 2085
+        y: 3040
+        width: 1019
+        height: 1020
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
+      border: {x: 156, y: 156, z: 156, w: 156}
       outline: []
       physicsShape: []
       tessellationDetail: -1
