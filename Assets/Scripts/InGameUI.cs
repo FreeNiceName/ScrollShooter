@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 public class InGameUI : MonoBehaviour
 {
@@ -47,8 +48,19 @@ public class InGameUI : MonoBehaviour
                 button.onClick.AddListener(Pause);
             if (button.name.Contains("Missile"))
                 button.onClick.AddListener(_playerController.ShootMissile);
-            //if (button.name.Contains("Fire"))
-            //    button.onClick.AddListener(ToMenu);
+            if (button.name.Contains("Fire"))
+            {
+                var eventTrigger = button.GetComponent<EventTrigger>();
+                var trigger = new EventTrigger.Entry();
+                trigger.eventID = EventTriggerType.PointerDown;
+                trigger.callback.AddListener((data) => _playerController.IsFiring = true);
+                eventTrigger.triggers.Add(trigger);
+
+                trigger = new EventTrigger.Entry();
+                trigger.eventID = EventTriggerType.PointerUp;
+                trigger.callback.AddListener((data) => _playerController.IsFiring = false);
+                eventTrigger.triggers.Add(trigger);
+            }
         }
     }
 

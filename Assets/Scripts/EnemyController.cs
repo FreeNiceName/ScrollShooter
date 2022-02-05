@@ -12,6 +12,8 @@ public class EnemyController : MonoBehaviour
 
     private Transform _model;
 
+    private WeaponController[] _weapons;
+
     public Vector3 XDirection { get; set; }
 
     void Start()
@@ -19,6 +21,8 @@ public class EnemyController : MonoBehaviour
         var enemy = transform.GetComponentInChildren<Enemy>();
         _model = enemy.gameObject.transform;
         enemy.OnWallCollision += SwitchXDirection;
+
+        _weapons = GetComponentsInChildren<WeaponController>();
     }
 
     void Update()
@@ -28,6 +32,9 @@ public class EnemyController : MonoBehaviour
 
         if(_xSpeed != 0)
             MoveSideToSide();
+
+        for (var i = 0; i < _weapons.Length; ++i)
+            _weapons[i].Shoot();
     }
 
     private void MoveDown()

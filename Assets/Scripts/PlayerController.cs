@@ -4,6 +4,7 @@ using UnityStandardAssets.CrossPlatformInput;
 public class PlayerController : MonoBehaviour
 {
     [SerializeField] private GameObject _specialPrefab;
+    [SerializeField] private bool _isAutofire;
 
     private Vector3 _defaultPosition;
 
@@ -17,6 +18,9 @@ public class PlayerController : MonoBehaviour
     private Transform _spaceship;
 
     private GameManager _gameManager;
+    private WeaponController _weapon;
+
+    public bool IsFiring { get; set; }
 
     void Start()
     {
@@ -25,12 +29,17 @@ public class PlayerController : MonoBehaviour
 
         _gameManager = FindObjectOfType<GameManager>();
         _gameManager.Death += ResetPosition;
+
+        _weapon = GetComponentInChildren<WeaponController>();
     }
 
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Space))
             ShootMissile();
+
+        if (_isAutofire || IsFiring)
+            Shoot();
     }
 
     void FixedUpdate()
@@ -88,5 +97,10 @@ public class PlayerController : MonoBehaviour
             _gameManager.Missiles--;
             Instantiate(_specialPrefab, transform.position, _specialPrefab.transform.rotation);
         }
+    }
+
+    public void Shoot()
+    {
+        _weapon.Shoot();
     }
 }
