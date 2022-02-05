@@ -31,6 +31,9 @@ public class PlayerController : MonoBehaviour
         _gameManager.Death += ResetPosition;
 
         _weapon = GetComponentInChildren<WeaponController>();
+
+        SettingsMenu.OnAutofireChanged += (s, e) => _isAutofire = SettingsMenu.IsAutofire;
+        _isAutofire = SettingsMenu.IsAutofire;
     }
 
     private void Update()

@@ -1,21 +1,31 @@
+using System.ComponentModel;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class SettingsMenu : MonoBehaviour
 {
-    private static int _resolutionIndex;
     private static float _volume;
     private static int _qualityIndex;
-    private static bool _isFullscreen;
+    private static bool _isAutofire = true;
 
-    private Dropdown _resolutionDropdown;
-    private Toggle _fullscreenToggle;
+    private Toggle _autofireToggle;
     private Dropdown _qualityDropdown;
     private Slider _volumeSlider;
 
     private GameObject _prevMenu;
-    private static Resolution[] _resolutions;
+
+    public static bool IsAutofire
+    {
+        get => _isAutofire;
+        private set
+        { 
+            _isAutofire = value;
+            OnAutofireChanged?.Invoke(typeof(SettingsMenu), new PropertyChangedEventArgs("IsAutofire"));
+        }
+    }
+
+    public static event PropertyChangedEventHandler OnAutofireChanged;
 
     void Start()
     {
@@ -24,11 +34,11 @@ public class SettingsMenu : MonoBehaviour
         SlidersInit();
 
         _volume = AudioListener.volume;
-        _isFullscreen = Screen.fullScreen;
 
-        _fullscreenToggle = GetComponentInChildren<Toggle>();
-        _fullscreenToggle.onValueChanged.AddListener(SetFullscreen);
-        _fullscreenToggle.isOn = _isFullscreen;
+        _autofireToggle = GetComponentInChildren<Toggle>();
+        _autofireToggle.isOn = _isAutofire;
+        //_fullscreenToggle.onValueChanged.AddListener(SetFullscreen);
+        //_fullscreenToggle.isOn = _isFullscreen;
     }
 
     public void Enable(GameObject prevMenu)
@@ -64,8 +74,6 @@ public class SettingsMenu : MonoBehaviour
         for (var i = 0; i < dropdowns.Length; ++i)
         {
             var dropdown = dropdowns[i];
-            if (dropdown.name.Contains("Resolution"))
-                ResolutionDropdownInit(dropdown);
             if (dropdown.name.Contains("Quality"))
                 QualityDropdownInit(dropdown);
         }
@@ -86,32 +94,6 @@ public class SettingsMenu : MonoBehaviour
         }
     }
 
-    private void ResolutionDropdownInit(Dropdown dropdown)
-    {
-        _resolutionDropdown = dropdown;
-
-        dropdown.onValueChanged.AddListener(SetResolution);
-
-        dropdown.ClearOptions();
-
-        _resolutions = Screen.resolutions;
-        var options = new List<string>();
-
-        for (var i = 0; i < _resolutions.Length; ++i)
-        {
-            string option = _resolutions[i].ToString();
-            options.Add(option);
-
-            if (_resolutions[i].width == Screen.width
-                && _resolutions[i].height == Screen.height)
-                _resolutionIndex = i;
-        }
-
-        dropdown.AddOptions(options);
-        dropdown.value = _resolutionIndex;
-        dropdown.RefreshShownValue();
-    }
-
     private void QualityDropdownInit(Dropdown dropdown)
     {
         _qualityDropdown = dropdown;
@@ -130,11 +112,9 @@ public class SettingsMenu : MonoBehaviour
 
     private void BackOnClick()
     {
-        SetResolution(_resolutionIndex);
-        _resolutionDropdown.value = _resolutionIndex;
-
-        SetFullscreen(_isFullscreen);
-        _fullscreenToggle.isOn = _isFullscreen;
+        _autofireToggle.isOn = _isAutofire;
+        //SetFullscreen(_isFullscreen);
+        //_fullscreenToggle.isOn = _isFullscreen;
 
         SetQuality(_qualityIndex);
         _qualityDropdown.value = _qualityIndex;
@@ -147,8 +127,7 @@ public class SettingsMenu : MonoBehaviour
 
     private void SaveOnClick()
     {
-        _resolutionIndex = _resolutionDropdown.value;
-        _isFullscreen = _fullscreenToggle.isOn;
+        IsAutofire = _autofireToggle.isOn;
         _qualityIndex = _qualityDropdown.value;
         _volume = _volumeSlider.value;
 
@@ -157,20 +136,9 @@ public class SettingsMenu : MonoBehaviour
         Disable();
     }
 
-    private void SetResolution(int resolutionIndex)
-    {
-        var resolution = _resolutions[resolutionIndex];
-        Screen.SetResolution(resolution.width, resolution.height, Screen.fullScreen);
-    }
-
     private void SetQuality(int qualityIndex)
     {
         QualitySettings.SetQualityLevel(qualityIndex);
-    }
-
-    private void SetFullscreen(bool isFullscreen)
-    {
-        Screen.fullScreen = isFullscreen;
     }
 
     private void SetVolume(float value)
