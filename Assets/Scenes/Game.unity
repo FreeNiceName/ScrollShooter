@@ -2115,8 +2115,9 @@ MonoBehaviour:
   - {fileID: 5268194417633325974, guid: a73474268c4805d418bfa107b3d140e8, type: 3}
   - {fileID: 6984137932513257056, guid: 9a20eface2a638a43bafb182d8bedf94, type: 3}
   - {fileID: 4048567159782204297, guid: 36c9275ec3b793c4bad8d18941efd635, type: 3}
-  _powerupPrefab: {fileID: 4257376919707589602, guid: bb390afdedc07d34caf3ed18d6803078,
-    type: 3}
+  _powerupPrefabs:
+  - {fileID: 4257376919707589602, guid: bb390afdedc07d34caf3ed18d6803078, type: 3}
+  - {fileID: 7159567785099277121, guid: 98c336e0fe42ebb45be6d5437867a0cf, type: 3}
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0

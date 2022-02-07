@@ -21,7 +21,10 @@ public class Spaceship : MonoBehaviour
     {
         if (other.CompareTag("Powerup"))
         {
-            ActivateShield();
+            if (other.gameObject.name.Contains("Shield"))
+                ActivateShield();
+            else if (other.gameObject.name.Contains("Missile"))
+                _gameManager.Missiles++;
             Destroy(other.gameObject);
         }
         else if (other.CompareTag("Projectile"))
